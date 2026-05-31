@@ -1,0 +1,18 @@
+# public/_redirects — Cloudflare Pages reads this automatically.
+# Map every old WordPress URL to its new path so SEO + inbound links survive.
+# Format:  <old-path>  <new-path>  <status>   (301 = permanent)
+# Fill in the real old slugs from the live WordPress site.
+
+/?p=*                         /reviews/:splat            301
+/bobbies-airway-grill/        /reviews/bobbies-airway-grill        301
+/chadwicks-old-town/          /reviews/chadwicks-old-town          301
+/brentwood/                   /reviews/brentwood                   301
+/beverleys-dallas/            /reviews/beverleys                   301
+/ospi-dallas/                 /reviews/ospi                        301
+/haywire-plano/               /reviews/haywire                     301
+/dl-macks-dallas/             /reviews/dl-macks                    301
+/fachini-dallas/              /reviews/fachini                     301
+/landed-in-dallas/            /reviews/landed-in-dallas            301
+
+# Catch-all for the old blog index
+/blog                         /reviews                             301
