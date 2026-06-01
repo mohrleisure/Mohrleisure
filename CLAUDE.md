@@ -159,8 +159,99 @@ correctness and trust over speed. For trivial tasks, use judgment.*
 ## Conventions
 
 - Node.js >= 18.
+- Use `pubDate:` (not `date:`) for review publish dates — `date` is a YAML reserved word and Astro v5's glob loader drops it silently, causing build errors.
 - Keep this file current: when a durable lesson emerges, add it as a one-liner
   *with the why*. That is how this ruleset was built.
 - For facts that should survive across sessions (decisions, gotchas, external
   resource pointers), use Claude Code's file-based memory at
   `~/.claude/projects/<project>/memory/`.
+
+---
+
+## Lessons Learned — mohrleisure.com (HARD rules)
+
+*Hard-won from running a large multi-city food guide. Each rule here cost real
+time, money, or trust the first time around.*
+
+### Photos — where a food/travel site lives or dies
+
+1. **Never use user-uploaded photos (Yelp-style UGC) as hero images.** They're
+   drink snapshots, stray hands, and drab rooms — they read as net-negative on a
+   review. Use the venue's own / owner photos, or Skyler & Kristen's own camera.
+2. **Hand-pick the hero photo on vibe — don't let an AI grader make the final
+   call.** AI is fine for cheap triage (flagging logos, blur, wrong subject) but
+   it flips run-to-run on "good vs. great." A human eye picks the featured shot:
+   warm room, styled plate, or a striking exterior that matches the spot's feel.
+3. **Hero priority order:** striking exterior/signage → warm interior/atmosphere
+   → atmospheric food → close-up food. Reject hotel-room, wedding, blackboard,
+   and logo shots.
+4. **BACK UP before overwriting any live image.** Download the current file to a
+   committed backup folder FIRST. A bulk in-place overwrite once destroyed
+   hundreds of originals with no revert path. A backup is mandatory, not optional.
+5. **Heavy unoptimized images are the #1 speed killer.** Compress every photo to
+   WebP (Squoosh / Cloudflare Images) before it ships. Biggest performance win on
+   a photo-forward blog.
+
+### Voice — the Mohr Leisure review tone
+
+6. **Write like an opinionated, well-fed friend — never a press release or
+   Wikipedia.** De-hype, but keep the personality. The founders' take IS the value.
+7. **Ban filler hype words:** "must-try," "hidden gem," "iconic," "legendary,"
+   "world-class," "delicious," "amazing," "best-kept secret." If every spot is
+   amazing, none are. Say what's specifically good and why.
+8. **Name real dishes, not categories.** "Salt-air margarita, crispy provolone"
+   beats "craft cocktails, small plates." Pull dish names from the actual menu.
+
+### Accuracy — never fabricate
+
+9. **Never invent** a venue name, address, hours, dish, price, rating, or award.
+   Every factual claim must trace to the founders' notes, the venue's own
+   site/menu, or the original post being migrated.
+10. **Trust code, not the model, to catch hallucinations.** An LLM will
+    confidently invent a plausible award, founding year, or chef name. A
+    deterministic check catches what the model misses. When in doubt: "I'm not
+    sure — please verify."
+11. **Preserve the founders' original wording on migration.** Tighten for
+    consistency; never rewrite their voice or opinion without sign-off.
+
+### Data & structure
+
+12. **Treat each review as structured data from day one** (venue, city,
+    neighborhood, cuisine, dishes, photo, pubDate) — not a wall of text. That's
+    what unlocks search, filters, and a map later. Retrofitting structure onto
+    free text is painful; do it up front.
+13. **Dedupe carefully before adding a spot.** Normalize the name (lowercase,
+    strip "the/&/punctuation/location suffix") and compare — a sloppy match
+    creates duplicate review cards. Same name, different address = second
+    *location*, not a duplicate.
+14. **Commit small and often.** A session once clobbered a batch of unsaved work.
+    Commit after each post or small batch — recovery stays clean.
+
+### Cost & process discipline
+
+15. **Calibrate the quality bar on ~10–20 items BEFORE a big run — then run
+    once.** Don't run loose, eyeball it, tighten, and re-run the whole batch.
+    Decide the standard up front. Re-running a full pass to fix a bar you could've
+    set first is the most common waste.
+16. **Surface cost before any paid run; do the high-value items first.** State
+    the rough spend, scope to what matters, don't sweep the long tail without a reason.
+17. **Match the tool to the task.** Don't build elaborate multi-step automation
+    for a job a single pass solves. Over-engineering burns time and money.
+18. **When a session balloons, STOP and checkpoint.** Summarize what's done and
+    committed, surface what's left, and decide next — don't charge through a
+    degrading session stacking more work on a shaky state.
+
+### Verification — the meta-lesson
+
+19. **A screenshot is a point-in-time proxy — it may be stale** (cached image,
+    old build, already-fixed). Verify against the live site/data before "fixing"
+    something that may not be broken.
+20. **Report status from what you measured, not what you intended.** "Done" means
+    you checked the result on the live site — not that a command returned a number.
+21. **Read the actual file before overwriting or deleting it.** Never act on a
+    filename, a date, or memory of what's in it. A wrong read wastes a step; a
+    wrong overwrite destroys work.
+
+> **The one-liner:** Real photos hand-picked on vibe, an honest opinionated
+> voice, every fact traceable to a source, structured data from day one, small
+> frequent commits — and never let the AI be the final judge of quality or truth.
