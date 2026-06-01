@@ -1,5 +1,5 @@
 ---
-title: "Brunch at Chadwicks in Old Town Alexandria: Worth the Stop?"
+title: "Chadwicks — Old Town Alexandria"
 venue: "Chadwicks"
 city: "Alexandria, VA"
 neighborhood: "Old Town"
