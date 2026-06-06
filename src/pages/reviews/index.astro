@@ -9,6 +9,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const reviews = (await getCollection('reviews'))
 	.filter((r) => !r.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const cities = ['All', ...new Set(reviews.map((r) => r.data.city))];
+const cuisines = ['All', ...new Set(reviews.map((r) => r.data.cuisine))];
 ---
 
 <!doctype html>
@@ -18,6 +21,48 @@ const reviews = (await getCollection('reviews'))
 		<style>
 			main {
 				width: 960px;
+			}
+			.filters {
+				margin-bottom: 2rem;
+			}
+			.filter-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+				margin-bottom: 0.6em;
+				align-items: center;
+			}
+			.filter-label {
+				font-size: 0.75em;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: rgb(var(--gray));
+				min-width: 60px;
+			}
+			.filter-btn {
+				border: 1.5px solid rgb(var(--gray-light));
+				background: var(--paper);
+				color: rgb(var(--gray));
+				border-radius: 999px;
+				padding: 0.3em 0.9em;
+				font-size: 0.82em;
+				cursor: pointer;
+				transition: all 0.15s;
+				font-family: var(--font-body, system-ui, sans-serif);
+			}
+			.filter-btn:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.filter-btn.active {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: white;
+			}
+			.review-count {
+				font-size: 0.85em;
+				color: rgb(var(--gray));
+				margin-bottom: 1.5rem;
 			}
 			ul {
 				display: flex;
@@ -55,6 +100,9 @@ const reviews = (await getCollection('reviews'))
 			ul li a {
 				display: block;
 			}
+			ul li.hidden {
+				display: none;
+			}
 			.title {
 				margin: 0;
 				color: rgb(var(--black));
@@ -72,20 +120,19 @@ const reviews = (await getCollection('reviews'))
 			ul a:hover img {
 				box-shadow: var(--box-shadow);
 			}
+			.no-results {
+				display: none;
+				text-align: center;
+				padding: 3em 1em;
+				color: rgb(var(--gray));
+				font-style: italic;
+			}
 			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
+				ul { gap: 0.5em; }
+				ul li { width: 100%; text-align: center; }
+				ul li:first-child { margin-bottom: 0; }
+				ul li:first-child .title { font-size: 1.563em; }
+				.filter-label { display: none; }
 			}
 		</style>
 	</head>
@@ -94,10 +141,38 @@ const reviews = (await getCollection('reviews'))
 		<main>
 			<section>
 				<h1 style="margin-bottom: 1.5rem; font-size: 2rem;">Restaurant Reviews</h1>
-				<ul>
+
+				<div class="filters">
+					<div class="filter-row">
+						<span class="filter-label">City</span>
+						{cities.map((city) => (
+							<button
+								class={`filter-btn city-btn${city === 'All' ? ' active' : ''}`}
+								data-city={city}
+							>
+								{city}
+							</button>
+						))}
+					</div>
+					<div class="filter-row">
+						<span class="filter-label">Cuisine</span>
+						{cuisines.map((cuisine) => (
+							<button
+								class={`filter-btn cuisine-btn${cuisine === 'All' ? ' active' : ''}`}
+								data-cuisine={cuisine}
+							>
+								{cuisine}
+							</button>
+						))}
+					</div>
+				</div>
+
+				<p class="review-count" id="count">{reviews.length} reviews</p>
+
+				<ul id="review-grid">
 					{
 						reviews.map((review) => (
-							<li>
+							<li data-city={review.data.city} data-cuisine={review.data.cuisine}>
 								<a href={`/reviews/${review.id}/`}>
 									<img src={review.data.photo} alt={review.data.photoAlt ?? review.data.venue} />
 									<h3 class="title">{review.data.title}</h3>
@@ -111,8 +186,54 @@ const reviews = (await getCollection('reviews'))
 						))
 					}
 				</ul>
+				<p class="no-results" id="no-results">No reviews found for this filter.</p>
 			</section>
 		</main>
 		<Footer />
+
+		<script>
+			const cityBtns = document.querySelectorAll<HTMLButtonElement>('.city-btn');
+			const cuisineBtns = document.querySelectorAll<HTMLButtonElement>('.cuisine-btn');
+			const items = document.querySelectorAll<HTMLLIElement>('#review-grid li');
+			const countEl = document.getElementById('count');
+			const noResults = document.getElementById('no-results');
+
+			let activeCity = 'All';
+			let activeCuisine = 'All';
+
+			function applyFilters() {
+				let visible = 0;
+				items.forEach((item) => {
+					const cityMatch = activeCity === 'All' || item.dataset.city === activeCity;
+					const cuisineMatch = activeCuisine === 'All' || item.dataset.cuisine === activeCuisine;
+					if (cityMatch && cuisineMatch) {
+						item.classList.remove('hidden');
+						visible++;
+					} else {
+						item.classList.add('hidden');
+					}
+				});
+				if (countEl) countEl.textContent = `${visible} review${visible !== 1 ? 's' : ''}`;
+				if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+			}
+
+			cityBtns.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					cityBtns.forEach((b) => b.classList.remove('active'));
+					btn.classList.add('active');
+					activeCity = btn.dataset.city ?? 'All';
+					applyFilters();
+				});
+			});
+
+			cuisineBtns.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					cuisineBtns.forEach((b) => b.classList.remove('active'));
+					btn.classList.add('active');
+					activeCuisine = btn.dataset.cuisine ?? 'All';
+					applyFilters();
+				});
+			});
+		</script>
 	</body>
 </html>

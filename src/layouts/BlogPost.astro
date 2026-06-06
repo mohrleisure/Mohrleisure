@@ -5,9 +5,11 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'reviews'>['data'];
+type Props = CollectionEntry<'reviews'>['data'] & {
+	related?: CollectionEntry<'reviews'>[];
+};
 
-const { title, venue, city, neighborhood, cuisine, pubDate, photo, photoAlt, standoutDishes = [] } = Astro.props;
+const { title, venue, city, neighborhood, cuisine, pubDate, photo, photoAlt, standoutDishes = [], related = [] } = Astro.props;
 
 const description = standoutDishes.length > 0
 	? `${cuisine} in ${neighborhood ? neighborhood + ', ' : ''}${city} — ${standoutDishes.slice(0, 2).join(', ')} and more. A review by Skyler & Kristen Mohr.`
@@ -105,11 +107,77 @@ const jsonLd = {
 				padding: 0.2em 0.75em;
 				font-size: 0.8em;
 			}
+			.breadcrumb {
+				font-size: 0.8em;
+				color: rgb(var(--gray));
+				padding: 0.75em 1em;
+				max-width: 720px;
+				margin: 0 auto;
+			}
+			.breadcrumb a {
+				color: rgb(var(--gray));
+				text-decoration: none;
+			}
+			.breadcrumb a:hover {
+				color: var(--accent);
+			}
+			.related {
+				max-width: 720px;
+				margin: 3em auto 0;
+				padding: 2em 1em;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.related h2 {
+				font-size: 1.2em;
+				margin: 0 0 1.2em;
+			}
+			.related-grid {
+				display: flex;
+				gap: 1.5em;
+				flex-wrap: wrap;
+			}
+			.related-card {
+				flex: 1;
+				min-width: 160px;
+				text-decoration: none;
+				color: inherit;
+			}
+			.related-card img {
+				width: 100%;
+				aspect-ratio: 3/2;
+				object-fit: cover;
+				border-radius: 8px;
+				margin-bottom: 0.4em;
+				transition: box-shadow 0.2s;
+			}
+			.related-card:hover img {
+				box-shadow: var(--box-shadow);
+			}
+			.related-card h3 {
+				font-size: 0.95em;
+				margin: 0 0 0.2em;
+				line-height: 1.3;
+			}
+			.related-card p {
+				font-size: 0.78em;
+				color: rgb(var(--gray));
+				margin: 0;
+			}
+			.related-card:hover h3 {
+				color: var(--accent);
+			}
 		</style>
 	</head>
 
 	<body>
 		<Header />
+		<nav class="breadcrumb" aria-label="Breadcrumb">
+			<a href="/reviews/">Reviews</a>
+			{' › '}
+			<a href={`/reviews/?city=${encodeURIComponent(city)}`}>{city}</a>
+			{' › '}
+			<span>{venue}</span>
+		</nav>
 		<main>
 			<article>
 				<div class="hero-image">
@@ -137,6 +205,21 @@ const jsonLd = {
 					<slot />
 				</div>
 			</article>
+
+			{related.length > 0 && (
+				<div class="related">
+					<h2>More in {city}</h2>
+					<div class="related-grid">
+						{related.map((r) => (
+							<a class="related-card" href={`/reviews/${r.id}/`}>
+								<img src={r.data.photo} alt={r.data.photoAlt ?? r.data.venue} />
+								<h3>{r.data.title}</h3>
+								<p>{r.data.cuisine}</p>
+							</a>
+						))}
+					</div>
+				</div>
+			)}
 		</main>
 		<Footer />
 	</body>

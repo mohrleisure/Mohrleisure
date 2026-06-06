@@ -3,20 +3,28 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-	const reviews = await getCollection('reviews');
-	return reviews
-		.filter((r) => !r.data.draft)
-		.map((review) => ({
-			params: { slug: review.id },
-			props: review,
-		}));
+	const allReviews = await getCollection('reviews');
+	const published = allReviews.filter((r) => !r.data.draft);
+	return published.map((review) => ({
+		params: { slug: review.id },
+		props: {
+			review,
+			related: published
+				.filter((r) => r.id !== review.id && r.data.city === review.data.city)
+				.slice(0, 3),
+		},
+	}));
 }
-type Props = CollectionEntry<'reviews'>;
 
-const review = Astro.props;
+interface Props {
+	review: CollectionEntry<'reviews'>;
+	related: CollectionEntry<'reviews'>[];
+}
+
+const { review, related } = Astro.props;
 const { Content } = await render(review);
 ---
 
-<BlogPost {...review.data}>
+<BlogPost {...review.data} related={related}>
 	<Content />
 </BlogPost>
