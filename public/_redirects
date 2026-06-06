@@ -1,5 +1,8 @@
 # public/_redirects — Cloudflare Pages reads this automatically.
 
+# Serve homepage (Cloudflare Pages requires this explicit rule for the root path)
+/    /index.html    200
+
 # Map every old WordPress URL to its new path so SEO + inbound links survive.
 # Format:  <old-path>  <new-path>  <status>   (301 = permanent)
 # Fill in the real old slugs from the live WordPress site.
