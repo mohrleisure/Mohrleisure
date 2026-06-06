@@ -4,7 +4,7 @@ venue: "D.L. Mack's"
 city: "Dallas"
 cuisine: "Pizza"
 pubDate: 2026-05-09
-photo: "/images/dl-macks-hero.jpg"
+photo: "/images/dl-macks-hero.webp"
 photoAlt: "D.L. Mack's Dallas interior"
 standoutDishes: ["Caesar salad with cornbread croutons", "bleu and gold martini", "Mack's Special pizza"]
 draft: false

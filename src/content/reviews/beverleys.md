@@ -4,7 +4,7 @@ venue: "Beverley's Bistro & Bar"
 city: "Dallas"
 cuisine: "American Bistro"
 pubDate: 2026-05-18
-photo: "/images/beverleys-hero.jpg"
+photo: "/images/beverleys-hero.webp"
 photoAlt: "Beverley's Bistro & Bar Dallas"
 standoutDishes: ["frozen mango margarita", "salmon latkes", "chicken schnitzel", "spicy lobster rigatoni", "jumbo lump crab cake"]
 draft: false

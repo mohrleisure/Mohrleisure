@@ -5,7 +5,7 @@ city: "Dallas"
 neighborhood: "Addison"
 cuisine: "Seafood & Steaks"
 pubDate: 2026-05-27
-photo: "/images/brentwood-hero.jpg"
+photo: "/images/brentwood-hero.webp"
 photoAlt: "Brentwood Dallas dining room"
 standoutDishes: ["pear martini", "spicy margarita with jalapeño salt rim", "ahi tuna tartare", "redfish with fried shrimp", "French dip"]
 draft: false

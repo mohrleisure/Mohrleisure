@@ -4,7 +4,7 @@ venue: "Bobbie's Airway Grill"
 city: "Dallas"
 cuisine: "American"
 pubDate: 2026-05-31
-photo: "/images/bobbies-airway-grill-hero.jpg"
+photo: "/images/bobbies-airway-grill-hero.webp"
 photoAlt: "Bobbie's Airway Grill dining room"
 standoutDishes: ["ahi tuna tartare", "Caesar salad with crispy oysters", "lump crab cake", "Italian Dip", "brownie sundae", "lemon meringue"]
 draft: false

@@ -5,7 +5,7 @@ city: "Dallas"
 neighborhood: "Highland Park"
 cuisine: "Coastal Italian"
 pubDate: 2026-05-16
-photo: "/images/ospi-hero.jpg"
+photo: "/images/ospi-hero.webp"
 photoAlt: "OSPI Dallas coastal Italian dining room"
 standoutDishes: ["salt air margarita", "crispy provolone", "beef ribs", "cheesecake"]
 draft: false

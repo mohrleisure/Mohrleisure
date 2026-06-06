@@ -4,7 +4,7 @@ venue: "Dallas Restaurant Guide"
 city: "Dallas"
 cuisine: "City Guide"
 pubDate: 2026-04-18
-photo: "/images/landed-in-dallas-hero.jpg"
+photo: "/images/landed-in-dallas-hero.webp"
 photoAlt: "Dallas skyline and food scene"
 standoutDishes: []
 draft: false

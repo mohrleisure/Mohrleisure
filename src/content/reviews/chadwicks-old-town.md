@@ -5,7 +5,7 @@ city: "Alexandria, VA"
 neighborhood: "Old Town"
 cuisine: "American"
 pubDate: 2026-05-27
-photo: "/images/chadwicks-old-town-hero.jpg"
+photo: "/images/chadwicks-old-town-hero.webp"
 photoAlt: "Chadwicks in Old Town Alexandria near the waterfront"
 standoutDishes: ["Monte Cristo", "mimosa"]
 draft: false

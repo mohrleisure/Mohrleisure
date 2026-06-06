@@ -5,7 +5,7 @@ city: "Dallas"
 neighborhood: "Highland Park Village"
 cuisine: "Italian"
 pubDate: 2026-05-02
-photo: "/images/fachini-hero.jpg"
+photo: "/images/fachini-hero.webp"
 photoAlt: "Fachini Italian restaurant Highland Park Village"
 standoutDishes: []
 draft: false

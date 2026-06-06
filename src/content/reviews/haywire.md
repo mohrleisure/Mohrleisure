@@ -5,7 +5,7 @@ city: "Plano"
 neighborhood: "Legacy West"
 cuisine: "Southern Comfort"
 pubDate: 2026-05-09
-photo: "/images/haywire-hero.jpg"
+photo: "/images/haywire-hero.webp"
 photoAlt: "Haywire Legacy West rooftop patio"
 standoutDishes: []
 draft: false

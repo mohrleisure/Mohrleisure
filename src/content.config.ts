@@ -15,6 +15,9 @@ const reviews = defineCollection({
 		photoAlt: z.string().optional(),
 		standoutDishes: z.array(z.string()).default([]),
 		rating: z.number().min(0).max(5).optional(),
+		priceRange: z.string().optional(),        // "$" | "$$" | "$$$" | "$$$$"
+		address: z.string().optional(),           // e.g. "4100 Westside Dr, Dallas, TX"
+		reservationUrl: z.string().url().optional(), // OpenTable, Resy, etc.
 		draft: z.boolean().default(false),
 	}),
 });
