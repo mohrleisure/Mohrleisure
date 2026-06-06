@@ -8,12 +8,50 @@ import Header from '../components/Header.astro';
 type Props = CollectionEntry<'reviews'>['data'];
 
 const { title, venue, city, neighborhood, cuisine, pubDate, photo, photoAlt, standoutDishes = [] } = Astro.props;
-const description = `${cuisine} in ${neighborhood ? neighborhood + ', ' : ''}${city}`;
+
+const description = standoutDishes.length > 0
+	? `${cuisine} in ${neighborhood ? neighborhood + ', ' : ''}${city} — ${standoutDishes.slice(0, 2).join(', ')} and more. A review by Skyler & Kristen Mohr.`
+	: `${cuisine} restaurant in ${neighborhood ? neighborhood + ', ' : ''}${city}. A review by Skyler & Kristen Mohr.`;
+
+const pageTitle = `${title} | Mohr Leisure`;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Review',
+	author: {
+		'@type': 'Person',
+		name: 'Skyler & Kristen Mohr',
+		url: 'https://mohrleisure.com/about/',
+	},
+	datePublished: pubDate.toISOString().split('T')[0],
+	itemReviewed: {
+		'@type': 'Restaurant',
+		name: venue,
+		servesCuisine: cuisine,
+		address: {
+			'@type': 'PostalAddress',
+			addressLocality: city,
+			...(neighborhood ? { addressRegion: neighborhood } : {}),
+		},
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'Mohr Leisure',
+		url: 'https://mohrleisure.com',
+	},
+};
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead
+			title={pageTitle}
+			description={description}
+			image={photo}
+			type="article"
+			pubDate={pubDate}
+		/>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -61,7 +99,7 @@ const description = `${cuisine} in ${neighborhood ? neighborhood + ', ' : ''}${c
 				margin-top: 0.75em;
 			}
 			.dish-tag {
-				background: rgb(var(--accent));
+				background: var(--accent);
 				color: white;
 				border-radius: 999px;
 				padding: 0.2em 0.75em;
