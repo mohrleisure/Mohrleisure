@@ -11,7 +11,7 @@ type Props = CollectionEntry<'reviews'>['data'] & {
 
 const pageUrl = Astro.url.href;
 
-const { title, venue, city, neighborhood, cuisine, pubDate, photo, photoAlt, standoutDishes = [], related = [], priceRange, address, reservationUrl } = Astro.props;
+const { title, venue, city, neighborhood, cuisine, pubDate, photo, photoAlt, gallery = [], standoutDishes = [], related = [], priceRange, address, reservationUrl } = Astro.props;
 
 const description = standoutDishes.length > 0
 	? `${cuisine} in ${neighborhood ? neighborhood + ', ' : ''}${city} — ${standoutDishes.slice(0, 2).join(', ')} and more. A review by Skyler & Kristen Mohr.`
@@ -227,6 +227,75 @@ const jsonLd = {
 				border-color: var(--accent);
 				color: var(--accent);
 			}
+			.gallery {
+				margin: 2.5em 0;
+				padding-top: 1.5em;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			.gallery h2 {
+				font-size: 1.1em;
+				margin: 0 0 1em;
+				color: rgb(var(--gray));
+				font-family: var(--font-body, system-ui, sans-serif);
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+			}
+			.gallery-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 0.5em;
+			}
+			@media (max-width: 600px) {
+				.gallery-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+			.gallery-grid button {
+				all: unset;
+				cursor: zoom-in;
+				display: block;
+				aspect-ratio: 1;
+				overflow: hidden;
+				border-radius: 6px;
+			}
+			.gallery-grid button img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.2s;
+				border-radius: 6px;
+			}
+			.gallery-grid button:hover img { transform: scale(1.03); }
+			.lightbox {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0,0,0,0.92);
+				z-index: 1000;
+				align-items: center;
+				justify-content: center;
+				cursor: zoom-out;
+			}
+			.lightbox.open { display: flex; }
+			.lightbox img {
+				max-width: 92vw;
+				max-height: 92vh;
+				object-fit: contain;
+				border-radius: 4px;
+				box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+			}
+			.lightbox-close {
+				position: absolute;
+				top: 1.2em;
+				right: 1.4em;
+				color: white;
+				font-size: 2rem;
+				line-height: 1;
+				cursor: pointer;
+				background: none;
+				border: none;
+				opacity: 0.8;
+			}
+			.lightbox-close:hover { opacity: 1; }
 		</style>
 	</head>
 
@@ -286,6 +355,19 @@ const jsonLd = {
 
 					<slot />
 
+					{gallery.length > 0 && (
+						<div class="gallery">
+							<h2>Photos</h2>
+							<div class="gallery-grid">
+								{gallery.map((src, i) => (
+									<button class="gallery-thumb" data-src={src} aria-label={`Photo ${i + 1}`}>
+										<img src={src} alt={`${venue} photo ${i + 1}`} loading="lazy" />
+									</button>
+								))}
+							</div>
+						</div>
+					)}
+
 					<div class="share-bar">
 						<span>Share:</span>
 						<button class="share-btn" id="copy-link">
@@ -320,7 +402,25 @@ const jsonLd = {
 			)}
 		</main>
 		<Footer />
+		<div class="lightbox" id="lightbox">
+			<button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+			<img id="lightbox-img" src="" alt="" />
+		</div>
+
 		<script>
+			const lightbox = document.getElementById('lightbox') as HTMLElement;
+			const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+			document.querySelectorAll<HTMLButtonElement>('.gallery-thumb').forEach(btn => {
+				btn.addEventListener('click', () => {
+					lightboxImg.src = btn.dataset.src ?? '';
+					lightbox.classList.add('open');
+				});
+			});
+			const closeLightbox = () => lightbox.classList.remove('open');
+			document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+			lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+			document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
 			const btn = document.getElementById('copy-link');
 			if (btn) {
 				btn.addEventListener('click', () => {

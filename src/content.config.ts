@@ -13,6 +13,7 @@ const reviews = defineCollection({
 		pubDate: z.coerce.date(),
 		photo: z.string(),
 		photoAlt: z.string().optional(),
+		gallery: z.array(z.string()).default([]),
 		standoutDishes: z.array(z.string()).default([]),
 		rating: z.number().min(0).max(5).optional(),
 		priceRange: z.string().optional(),        // "$" | "$$" | "$$$" | "$$$$"
