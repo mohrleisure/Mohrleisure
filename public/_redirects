@@ -4,7 +4,6 @@
 # Format:  <old-path>  <new-path>  <status>   (301 = permanent)
 # Fill in the real old slugs from the live WordPress site.
 
-/?p=*                         /reviews/:splat            301
 /bobbies-airway-grill/        /reviews/bobbies-airway-grill        301
 /chadwicks-old-town/          /reviews/chadwicks-old-town          301
 /brentwood/                   /reviews/brentwood                   301
