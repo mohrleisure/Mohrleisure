@@ -4,11 +4,22 @@ venue: "Columbian Country Club"
 city: "Dallas"
 cuisine: "Bar & Sushi"
 pubDate: 2026-06-15
-photo: "/images/columbian-country-club-hero.webp"
-photoAlt: "Columbian Country Club Dallas"
+photo: "/images/columbian-country-club-3.webp"
+photoAlt: "Columbian Country Club bar Dallas"
 standoutDishes: ["serpiente", "spicy tuna roll", "cheese-bao-ger"]
 priceRange: "$$$"
-draft: true
+address: "3314 Ross Avenue #150, Dallas, TX 75204"
+gallery:
+  - "/images/columbian-country-club-1.webp"
+  - "/images/columbian-country-club-2.webp"
+  - "/images/columbian-country-club-4.webp"
+  - "/images/columbian-country-club-5.webp"
+  - "/images/columbian-country-club-6.webp"
+  - "/images/columbian-country-club-7.webp"
+  - "/images/columbian-country-club-8.webp"
+  - "/images/columbian-country-club-9.webp"
+  - "/images/columbian-country-club-hero.webp"
+draft: false
 ---
 
 Columbian Country Club has been generating real buzz around Dallas. We went in for happy hour with genuine expectations. We left early.
