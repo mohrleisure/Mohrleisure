@@ -4,21 +4,20 @@ venue: "BOA Steakhouse"
 city: "Austin"
 cuisine: "Steakhouse"
 pubDate: 2026-07-13
-photo: "/images/boa-steakhouse-hero.webp"
+photo: "/images/boa-hero.webp"
 photoAlt: "Filet mignon with sauce selections at BOA Steakhouse Austin"
 standoutDishes: ["Parker House rolls", "filet", "tableside Caesar"]
 priceRange: "$$$$"
 gallery:
-  - "/images/boa-steakhouse-1.webp"
-  - "/images/boa-steakhouse-2.webp"
-  - "/images/boa-steakhouse-3.webp"
-  - "/images/boa-steakhouse-4.webp"
-  - "/images/boa-steakhouse-5.webp"
-  - "/images/boa-steakhouse-6.webp"
-  - "/images/boa-steakhouse-7.webp"
-  - "/images/boa-steakhouse-8.webp"
-  - "/images/boa-steakhouse-9.webp"
-  - "/images/boa-steakhouse-10.webp"
+  - "/images/boa-gallery-1.webp"
+  - "/images/boa-gallery-2.webp"
+  - "/images/boa-gallery-3.webp"
+  - "/images/boa-gallery-4.webp"
+  - "/images/boa-gallery-5.webp"
+  - "/images/boa-gallery-6.webp"
+  - "/images/boa-gallery-7.webp"
+  - "/images/boa-gallery-8.webp"
+  - "/images/boa-gallery-9.webp"
 draft: false
 ---
 

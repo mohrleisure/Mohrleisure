@@ -4,17 +4,16 @@ venue: "Hillstone"
 city: "Dallas"
 cuisine: "American"
 pubDate: 2026-07-13
-photo: "/images/hillstone-hero.webp"
+photo: "/images/hillstone-hero2.webp"
 photoAlt: "The Crush cocktails at Hillstone Dallas"
 standoutDishes: ["The Crush", "spinach artichoke dip", "French dip", "pecan cobbler"]
 priceRange: "$$$"
 gallery:
-  - "/images/hillstone-1.webp"
-  - "/images/hillstone-2.webp"
-  - "/images/hillstone-3.webp"
-  - "/images/hillstone-4.webp"
-  - "/images/hillstone-5.webp"
-  - "/images/hillstone-6.webp"
+  - "/images/hillstone-gallery-1.webp"
+  - "/images/hillstone-gallery-2.webp"
+  - "/images/hillstone-gallery-3.webp"
+  - "/images/hillstone-gallery-4.webp"
+  - "/images/hillstone-gallery-5.webp"
 draft: false
 ---
 
