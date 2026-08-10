@@ -45,7 +45,7 @@ Save room for the blueberry bread pudding. It arrives with a scoop of cream and 
 
 ## Top Brass American Bistro
 
-Top Brass lives inside Hotel Day Addison, and on a Friday night the dining room had zero other guests. Not a slow night — zero. The room itself is a real investment: the buildout is thoughtful, the decor is considered, the space feels like someone spent serious money getting it right. Which makes the empty tables land harder.
+Top Brass lives inside Hotel Dax, and on a Friday night the dining room had zero other guests. Not a slow night — zero. The room itself is a real investment: the buildout is thoughtful, the decor is considered, the space feels like someone spent serious money getting it right. Which makes the empty tables land harder.
 
 Self-parking is easy off the hotel lot — no friction getting in. The service is warm and attentive, probably because we had the full staff's attention.
 
