@@ -15,6 +15,18 @@ const albumConfig: Record<string, { prefix: string; label: string }> = {
   'vendors':      { prefix: 'wedding-vendors',    label: 'Vendors' },
 };
 
+const vendorCredits = [
+  { role: 'Photography', handle: 'themontgomerysphotofilm' },
+  { role: 'Content Creator', handle: 'foreverafterinstantly' },
+  { role: 'Venue', handle: 'thehallondragon' },
+  { role: 'Florist', handle: 'brighteyedblooms' },
+  { role: 'Planner', handle: 'joinedbylovewp' },
+  { role: 'Cake', handle: 'biminysweets' },
+  { role: 'Hair & Makeup', handle: 'sheisartbeauty' },
+  { role: 'DJ', handle: 'djkellyhooper' },
+  { role: 'Saxophone', handle: 'dallassaxophone' },
+];
+
 export function getStaticPaths() {
   const albums = ['details', 'pre-ceremony', 'portraits', 'formals', 'ceremony', 'reception', 'vendors'];
   return albums.map(album => ({ params: { album } }));
@@ -149,6 +161,32 @@ const photos = fs.readdirSync(imagesDir)
         color: rgba(255,255,255,0.6);
         font-size: 0.85em;
       }
+      .vendor-credits {
+        max-width: 680px;
+        margin: 0 auto 0.5em;
+        padding: 1.5em 1em;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75em 2em;
+      }
+      .vendor-credit {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15em;
+      }
+      .vendor-credit span {
+        font-size: 0.75em;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgb(var(--gray));
+      }
+      .vendor-credit a {
+        font-family: var(--font-display, Georgia, serif);
+        font-size: 1em;
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .vendor-credit a:hover { text-decoration: underline; }
     </style>
   </head>
   <body>
@@ -158,6 +196,17 @@ const photos = fs.readdirSync(imagesDir)
       <h1>{config.label}</h1>
       <p>Kristen & Skyler Mohr · The Hall on Dragon, Dallas · August 28, 2026 · {photos.length} photos</p>
     </div>
+
+    {album === 'vendors' && (
+      <div class="vendor-credits">
+        {vendorCredits.map(v => (
+          <div class="vendor-credit">
+            <span>{v.role}</span>
+            <a href={`https://www.instagram.com/${v.handle}/`} target="_blank" rel="noopener">@{v.handle}</a>
+          </div>
+        ))}
+      </div>
+    )}
 
     <div class="gallery-grid">
       {photos.map((src, i) => (
